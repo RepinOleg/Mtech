@@ -1,13 +1,12 @@
 import datetime as _dt
 import pydantic as _pydantic
-import uuid
 
 
 class _BaseHttp(_pydantic.BaseModel):
     ip: str
-    method: str
+    http_method: str
     uri: str
-    status: int
+    http_status: int
 
 
 class Http(_BaseHttp):
@@ -15,7 +14,7 @@ class Http(_BaseHttp):
     date_created: _dt.datetime
 
     class Config:
-        from_attributes = True
+        orm_mode = True
 
 
 class CreateHttp(_BaseHttp):

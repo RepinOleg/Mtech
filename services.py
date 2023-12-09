@@ -28,13 +28,14 @@ async def create_http(http: _schemas.CreateHttp, db: "Session") -> _schemas.Http
     return _schemas.Http(
         id=http_model.id,
         ip=http.ip,
-        http_method=http.method,
+        http_method=http.http_method,
         uri=http.uri,
-        http_status=http.status,
+        http_status=http.http_status,
         date_created=http_model.date_created,
     )
 
 
-async def get_all_http(db: "Session") -> List[_schemas.Http]:
-    http = db.query(_models.Http).all()
-    return list([_schemas.Http.model_dump(http)])
+async def get_http(db: "Session") -> _schemas.Http:
+    http_model = db.query(_models.Http).all()
+
+    return http_model
