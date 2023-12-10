@@ -1,8 +1,8 @@
-import datetime as _dt
-import pydantic as _pydantic
+from datetime import datetime
+from pydantic import BaseModel
 
 
-class _BaseHttp(_pydantic.BaseModel):
+class _BaseHttp(BaseModel):
     ip: str
     http_method: str
     uri: str
@@ -11,7 +11,7 @@ class _BaseHttp(_pydantic.BaseModel):
 
 class Http(_BaseHttp):
     id: int
-    date_created: _dt.datetime
+    date_created: datetime
 
     class Config:
         orm_mode = True

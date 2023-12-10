@@ -1,14 +1,14 @@
 import datetime as _dt
-import sqlalchemy as _sql
+from sqlalchemy import Column, Integer, String, DateTime
 
 import database as _database
 
 
 class Http(_database.Base):
     __tablename__ = "http"
-    id = _sql.Column(_sql.Integer, primary_key=True, index=True)
-    ip = _sql.Column(_sql.String, index=True)
-    http_method = _sql.Column(_sql.String, index=True)
-    uri = _sql.Column(_sql.String, index=True)
-    http_status = _sql.Column(_sql.Integer, index=True)
-    date_created = _sql.Column(_sql.DateTime, default=_dt.datetime.utcnow)
+    id = Column(Integer, primary_key=True, index=True)
+    ip = Column(String, index=True)
+    http_method = Column(String, index=True)
+    uri = Column(String, index=True)
+    http_status = Column(Integer, index=True)
+    date_created = Column(DateTime, default=_dt.datetime.utcnow)

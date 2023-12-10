@@ -1,31 +1,31 @@
 from typing import TYPE_CHECKING, List
 
-import database as _database
-import models as _models
-import schemas as _schemas
+import database
+import models
+import schemas
 
 if TYPE_CHECKING:
     from sqlalchemy.orm import Session
 
 
 def _add_tables():
-    return _database.Base.metadata.create_all(bind=_database.engine)
+    return database.Base.metadata.create_all(bind=database.engine)
 
 
 def get_db():
-    db = _database.SessionLocal()
+    db = database.SessionLocal()
     try:
         yield db
     finally:
         db.close()
 
 
-async def create_http(http: _schemas.CreateHttp, db: "Session") -> _schemas.Http:
-    http_model = _models.Http(**http.model_dump())
+async def create_http(http: schemas.CreateHttp, db: "Session") -> schemas.Http:
+    http_model = models.Http(**http.model_dump())
     db.add(http_model)
     db.commit()
     db.refresh(http_model)
-    return _schemas.Http(
+    return schemas.Http(
         id=http_model.id,
         ip=http.ip,
         http_method=http.http_method,
@@ -35,7 +35,7 @@ async def create_http(http: _schemas.CreateHttp, db: "Session") -> _schemas.Http
     )
 
 
-async def get_http(db: "Session") -> _schemas.Http:
-    http_model = db.query(_models.Http).all()
+async def get_http(db: "Session") -> schemas.Http:
+    http_model = db.query(models.Http).all()
 
     return http_model
